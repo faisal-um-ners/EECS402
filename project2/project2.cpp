@@ -299,7 +299,17 @@ int main()
 
 // Class method definitions
 
-// ColorClass method implementations
+// ---------------- ColorClass Method Implementations ----------------
+
+/*
+ * Clips the given value to ensure it stays within range.
+ * 
+ * Parameters:
+ *  - value: Integer color value to be clipped.
+ * 
+ * Returns:
+ *  - Clipped value within COLOR_MIN and COLOR_MAX.
+ */
 int ColorClass::clipValue(int value) {
     if (value < COLOR_MIN) {
         return COLOR_MIN;
@@ -309,45 +319,78 @@ int ColorClass::clipValue(int value) {
     return value;
 }
 
+/*
+ * Default constructor initializes color to white.
+ */
 ColorClass::ColorClass() : red(COLOR_MAX), 
 green(COLOR_MAX), blue(COLOR_MAX) {}
 
+/*
+ * Constructor initializes color with given values.
+ * 
+ * Parameters:
+ *  - inRed, inGreen, inBlue: RGB color values.
+ */
 ColorClass::ColorClass(int inRed, int inGreen, int inBlue) {
     red = clipValue(inRed);
     green = clipValue(inGreen);
     blue = clipValue(inBlue);
 }
 
+/*
+ * Sets the color to black (0,0,0).
+ */
 void ColorClass::setToBlack() {
     red = COLOR_MIN;
     green = COLOR_MIN;
     blue = COLOR_MIN;
 }
 
+/*
+ * Sets the color to red (max,0,0).
+ */
 void ColorClass::setToRed() {
     red = COLOR_MAX;
     green = COLOR_MIN;
     blue = COLOR_MIN;
 }
 
+/*
+ * Sets the color to green (0,max,0).
+ */
 void ColorClass::setToGreen() {
     red = COLOR_MIN;
     green = COLOR_MAX;
     blue = COLOR_MIN;
 }
 
+/*
+ * Sets the color to blue (0,0,max).
+ */
 void ColorClass::setToBlue() {
     red = COLOR_MIN;
     green = COLOR_MIN;
     blue = COLOR_MAX;
 }
 
+/*
+ * Sets the color to white (max,max,max).
+ */
 void ColorClass::setToWhite() {
     red = COLOR_MAX;
     green = COLOR_MAX;
     blue = COLOR_MAX;
 }
 
+/*
+ * Sets color values and clips if needed.
+ * 
+ * Parameters:
+ *  - inRed, inGreen, inBlue: RGB values.
+ * 
+ * Returns:
+ *  - true if clipping occurred, false otherwise.
+ */
 bool ColorClass::setTo(int inRed, int inGreen, int inBlue) {
     int newRed = clipValue(inRed);
     int newGreen = clipValue(inGreen);
@@ -363,14 +406,31 @@ bool ColorClass::setTo(int inRed, int inGreen, int inBlue) {
     return clipped;
 }
 
+/*
+ * Copies color values from another ColorClass object.
+ * 
+ * Parameters:
+ *  - inColor: ColorClass object to copy from.
+ * 
+ * Returns:
+ *  - false, since clipping is not needed.
+ */
 bool ColorClass::setTo(const ColorClass &inColor) {
     red = inColor.red;
     green = inColor.green;
     blue = inColor.blue;
-    // No clipping needed since inColor is already clipped
     return false; 
 }
 
+/*
+ * Adds another color to this color and clips if needed.
+ * 
+ * Parameters:
+ *  - rhs: ColorClass object to add.
+ * 
+ * Returns:
+ *  - true if clipping occurred, false otherwise.
+ */
 bool ColorClass::addColor(const ColorClass &rhs) {
     int newRed = red + rhs.red;
     int newGreen = green + rhs.green;
@@ -380,6 +440,15 @@ bool ColorClass::addColor(const ColorClass &rhs) {
     return clipped;
 }
 
+/*
+ * Subtracts another color from this color and clips if needed.
+ * 
+ * Parameters:
+ *  - rhs: ColorClass object to subtract.
+ * 
+ * Returns:
+ *  - true if clipping occurred, false otherwise.
+ */
 bool ColorClass::subtractColor(const ColorClass &rhs) {
     int newRed = red - rhs.red;
     int newGreen = green - rhs.green;
@@ -389,6 +458,15 @@ bool ColorClass::subtractColor(const ColorClass &rhs) {
     return clipped;
 }
 
+/*
+ * Adjusts brightness using a scaling factor.
+ * 
+ * Parameters:
+ *  - adjFactor: Factor to scale the brightness.
+ * 
+ * Returns:
+ *  - true if clipping occurred, false otherwise.
+ */
 bool ColorClass::adjustBrightness(double adjFactor) {
     int newRed = static_cast<int>(red * adjFactor);
     int newGreen = static_cast<int>(green * adjFactor);
@@ -398,52 +476,93 @@ bool ColorClass::adjustBrightness(double adjFactor) {
     return clipped;
 }
 
+/*
+ * Prints RGB values of the color.
+ */
 void ColorClass::printComponentValues() const {
     cout << "R: " << red << " G: " << green << " B: " << blue;
 }
 
-// RowColumnClass method implementations
+// ---------------- RowColumnClass Method Implementations ----------------
+
+/*
+ * Default constructor initializes row and col values.
+ */
 RowColumnClass::RowColumnClass() : 
 row(DEFAULT_ROW_COLUMN_VALUE), col(DEFAULT_ROW_COLUMN_VALUE) {}
 
+/*
+ * Constructor initializes row and column with given values.
+ */
 RowColumnClass::RowColumnClass(int inRow, int inCol) : 
 row(inRow), col(inCol) {}
 
+/*
+ * Sets row and column values.
+ */
 void RowColumnClass::setRowCol(int inRow, int inCol) {
     row = inRow;
     col = inCol;
 }
 
+/*
+ * Sets only the row value.
+ */
 void RowColumnClass::setRow(int inRow) {
     row = inRow;
 }
 
+/*
+ * Sets only the column value.
+ */
 void RowColumnClass::setCol(int inCol) {
     col = inCol;
 }
 
+/*
+ * Gets the row value.
+ */
 int RowColumnClass::getRow() const {
     return row;
 }
 
+/*
+ * Gets the column value.
+ */
 int RowColumnClass::getCol() const {
     return col;
 }
 
+/*
+ * Adds another RowColumnClass object to this object.
+ */
 void RowColumnClass::addRowColTo(const RowColumnClass &inRowCol) {
     row += inRowCol.row;
     col += inRowCol.col;
 }
 
+/*
+ * Prints the row and column values.
+ */
 void RowColumnClass::printRowCol() const {
     cout << "[" << row << "," << col << "]";
 }
 
-// ColorImageClass method implementations
+// ------- ColorImageClass Method Implementations -------
+
+/*
+ Default constructor initializes image to black.
+*/
 ColorImageClass::ColorImageClass() {
     initializeTo(ColorClass(COLOR_MIN, COLOR_MIN, COLOR_MIN));
 }
 
+/*
+ * Initializes the image with a specific color.
+ * 
+ * Parameters:
+ *  - inColor: ColorClass object to fill the image.
+ */
 void ColorImageClass::initializeTo(const ColorClass &inColor) {
     for (int i = START_POINT; i < IMAGE_ROWS; i++) {
         for (int j = START_POINT; j < IMAGE_COLS; j++) {
@@ -452,6 +571,15 @@ void ColorImageClass::initializeTo(const ColorClass &inColor) {
     }
 }
 
+/*
+ * Adds another image to this image.
+ * 
+ * Parameters:
+ *  - rhsImg: Image to add.
+ * 
+ * Returns:
+ *  - true if any pixel addition clips.
+ */
 bool ColorImageClass::addImageTo(const ColorImageClass &rhsImg) {
     bool clipped = false;
     for (int i = START_POINT; i < IMAGE_ROWS; i++) {
@@ -464,64 +592,122 @@ bool ColorImageClass::addImageTo(const ColorImageClass &rhsImg) {
     return clipped;
 }
 
+/*
+Function: addImages
+Description: Adds multiple images together 
+            and stores the result.
+Parameters:
+- numImgsToAdd: Number of images to be added.
+- imagesToAdd[]: Array containing images to add.
+Returns:
+- true if any image addition causes clipping.
+- false if no clipping occurs during the operation.
+*/
 bool ColorImageClass::addImages(int numImgsToAdd, 
             const ColorImageClass imagesToAdd[]) {
-    // Set the original colorImage to black
+    
+    // Initialize the image to black before adding
     ColorClass Initial;
     Initial.setToBlack();
     initializeTo(Initial); 
-
-    // Set the clip status as false
+    
+    // Flag to track if any clipping occurs
     bool clipped = false;
 
-    // Iterate through the number of images to add together
+    // Iterate through all images to add them together
     for (int i = START_POINT; i < numImgsToAdd; i++) {
         bool imageClipped = addImageTo(imagesToAdd[i]);
 
-        // If any image causes clipping, set clipped to true
+        // If any image clips, set the flag to true
         if (imageClipped) {
             clipped = true;
         }
     }
-
-    // Return the clipped status
+    // Return whether clipping occurred
     return clipped;
 }
 
-bool ColorImageClass::setColorAtLocation(const 
-RowColumnClass &inRowCol, const ColorClass &inColor) {
-    int row = inRowCol.getRow();
-    int col = inRowCol.getCol();
 
+/*
+Function: setColorAtLocation
+Description: Sets the color at a specific location 
+            in the image.
+Parameters:
+- inRowCol: RowColumnClass object with row, col values.
+- inColor: ColorClass object containing the new color.
+
+Set the color and returns true if the location is 
+within valid image bounds or return false if the location 
+is out of bounds.
+*/
+bool ColorImageClass::setColorAtLocation(
+    const RowColumnClass &inRowCol, const ColorClass &inColor) {
+    
+    int row = inRowCol.getRow(); // Get row index
+    int col = inRowCol.getCol(); // Get column index
+
+    // Check if row and column are within valid bounds
     if (row >= 0 && row < IMAGE_ROWS && 
-    col >= 0 && col < IMAGE_COLS) {
-        image[row][col].setTo(inColor);
-        return true;
+        col >= 0 && col < IMAGE_COLS) {
+        
+        image[row][col].setTo(inColor); // Assign color
+        return true; // Successful update
     }
-    return false;
+    return false; // Location is out of bounds
 }
 
-bool ColorImageClass::getColorAtLocation(const 
-RowColumnClass &inRowCol, ColorClass &outColor) const {
-    int row = inRowCol.getRow();
-    int col = inRowCol.getCol();
 
+/*
+Function: getColorAtLocation
+Decribtion: Retrieves the color at a given 
+        location in the image.
+Parameters:
+- inRowCol: RowColumnClass object specifying location.
+- outColor: ColorClass object to store retrieved color.
+
+Returns true if the location is valid 
+    false if the location is out of bounds.
+ */
+bool ColorImageClass::getColorAtLocation(
+    const RowColumnClass &inRowCol, ColorClass &outColor) 
+    const {
+    
+    int row = inRowCol.getRow(); // Extract row index
+    int col = inRowCol.getCol(); // Extract column index
+
+    // Check if row and col are within valid image bounds
     if (row >= START_POINT && row < IMAGE_ROWS && 
-    col >= START_POINT && col < IMAGE_COLS) {
-        outColor.setTo(image[row][col]);
-        return true;
+        col >= START_POINT && col < IMAGE_COLS) {
+        
+        outColor.setTo(image[row][col]); // Set color at location
+        return true; // Valid location
     }
-    return false;
+    return false; // Out of bounds
 }
 
+
+/*
+Function: printImage
+Description: Prints the entire image stored in 
+            the ColorImageClass object.
+            Each pixel's component values are 
+            printed and separated by "--".
+*/
 void ColorImageClass::printImage() const {
+    // Loop through each row of the image
     for (int i = START_POINT; i < IMAGE_ROWS; i++) {
+        // Loop through each column of the image
         for (int j = START_POINT; j < IMAGE_COLS; j++) {
+            // Print the pixel's color component values
             image[i][j].printComponentValues();
+            
+            // Print separator between pixels, 
+            // but not at the end of the row
             if (j < IMAGE_COLS - 1) {
                 cout << "--";
             }
         }
+        // Move to the next line after printing a row
         cout << endl;
     }
 }
