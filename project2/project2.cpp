@@ -15,6 +15,11 @@ const int COLOR_MIN = 0;
 const int COLOR_MAX = 1000;
 // Default sets for row and column to -99999
 const int DEFAULT_ROW_COLUMN_VALUE = -99999;
+// For ColorImageClass
+const int IMAGE_ROWS = 10;
+const int IMAGE_COLS = 18;
+// for loop start point
+const int START_POINT = 0;
 
 // Class to represent a color
 class ColorClass {
@@ -110,8 +115,6 @@ public:
 // Class to represent an image
 class ColorImageClass {
 private:
-    static const int IMAGE_ROWS = 10;
-    static const int IMAGE_COLS = 18;
     ColorClass image[IMAGE_ROWS][IMAGE_COLS];
 
 public:
@@ -442,8 +445,8 @@ ColorImageClass::ColorImageClass() {
 }
 
 void ColorImageClass::initializeTo(const ColorClass &inColor) {
-    for (int i = 0; i < IMAGE_ROWS; i++) {
-        for (int j = 0; j < IMAGE_COLS; j++) {
+    for (int i = START_POINT; i < IMAGE_ROWS; i++) {
+        for (int j = START_POINT; j < IMAGE_COLS; j++) {
             image[i][j].setTo(inColor);
         }
     }
@@ -451,8 +454,8 @@ void ColorImageClass::initializeTo(const ColorClass &inColor) {
 
 bool ColorImageClass::addImageTo(const ColorImageClass &rhsImg) {
     bool clipped = false;
-    for (int i = 0; i < IMAGE_ROWS; i++) {
-        for (int j = 0; j < IMAGE_COLS; j++) {
+    for (int i = START_POINT; i < IMAGE_ROWS; i++) {
+        for (int j = START_POINT; j < IMAGE_COLS; j++) {
             if (image[i][j].addColor(rhsImg.image[i][j])) {
                 clipped = true;
             }
@@ -473,7 +476,7 @@ bool ColorImageClass::addImages(int numImgsToAdd,
     bool clipped = false;
 
     // Iterate through the number of images to add together
-    for (int i = 0; i < numImgsToAdd; i++) {
+    for (int i = START_POINT; i < numImgsToAdd; i++) {
         addImageTo(imagesToAdd[i]); // Call member function directly
         clipped = true;
     }
@@ -509,8 +512,8 @@ RowColumnClass &inRowCol, ColorClass &outColor) const {
 }
 
 void ColorImageClass::printImage() const {
-    for (int i = 0; i < IMAGE_ROWS; i++) {
-        for (int j = 0; j < IMAGE_COLS; j++) {
+    for (int i = START_POINT; i < IMAGE_ROWS; i++) {
+        for (int j = START_POINT; j < IMAGE_COLS; j++) {
             image[i][j].printComponentValues();
             if (j < IMAGE_COLS - 1) {
                 cout << "--";
