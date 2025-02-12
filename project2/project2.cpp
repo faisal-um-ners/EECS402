@@ -470,15 +470,18 @@ bool ColorImageClass::addImages(int numImgsToAdd,
     ColorClass Initial;
     Initial.setToBlack();
     initializeTo(Initial); 
-    // No need for 'this->' since it's an implicit call
 
     // Set the clip status as false
     bool clipped = false;
 
     // Iterate through the number of images to add together
     for (int i = START_POINT; i < numImgsToAdd; i++) {
-        addImageTo(imagesToAdd[i]); // Call member function directly
-        clipped = true;
+        bool imageClipped = addImageTo(imagesToAdd[i]);
+
+        // If any image causes clipping, set clipped to true
+        if (imageClipped) {
+            clipped = true;
+        }
     }
 
     // Return the clipped status
@@ -503,8 +506,8 @@ RowColumnClass &inRowCol, ColorClass &outColor) const {
     int row = inRowCol.getRow();
     int col = inRowCol.getCol();
 
-    if (row >= 0 && row < IMAGE_ROWS && 
-    col >= 0 && col < IMAGE_COLS) {
+    if (row >= START_POINT && row < IMAGE_ROWS && 
+    col >= START_POINT && col < IMAGE_COLS) {
         outColor.setTo(image[row][col]);
         return true;
     }
