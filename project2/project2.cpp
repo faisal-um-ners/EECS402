@@ -627,11 +627,10 @@ bool ColorImageClass::addImages(int numImgsToAdd,
 /*
 Function: setColorAtLocation
 Description: Sets the color at a specific location 
-            in the image.
+    in the image.
 Parameters:
 - inRowCol: RowColumnClass object with row, col values.
 - inColor: ColorClass object containing the new color.
-
 Set the color and returns true if the location is 
 within valid image bounds or return false if the location 
 is out of bounds.
@@ -667,16 +666,14 @@ Returns true if the location is valid
 bool ColorImageClass::getColorAtLocation(
     const RowColumnClass &inRowCol, ColorClass &outColor) 
     const {
-    
     int row = inRowCol.getRow(); // Extract row index
     int col = inRowCol.getCol(); // Extract column index
 
     // Check if row and col are within valid image bounds
     if (row >= START_POINT && row < IMAGE_ROWS && 
-        col >= START_POINT && col < IMAGE_COLS) {
-        
-        outColor.setTo(image[row][col]); // Set color at location
-        return true; // Valid location
+    col >= START_POINT && col < IMAGE_COLS) {
+    outColor.setTo(image[row][col]); // Set color at location
+    return true; // Valid location
     }
     return false; // Out of bounds
 }
