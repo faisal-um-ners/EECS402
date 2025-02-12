@@ -468,9 +468,9 @@ bool ColorClass::subtractColor(const ColorClass &rhs) {
  *  - true if clipping occurred, false otherwise.
  */
 bool ColorClass::adjustBrightness(double adjFactor) {
-    int newRed = static_cast<int>(red * adjFactor);
-    int newGreen = static_cast<int>(green * adjFactor);
-    int newBlue = static_cast<int>(blue * adjFactor);
+    int newRed = (int)(red * adjFactor);
+    int newGreen = (int)(green * adjFactor);
+    int newBlue = (int)(blue * adjFactor);
 
     bool clipped = setTo(newRed, newGreen, newBlue);
     return clipped;
@@ -483,7 +483,7 @@ void ColorClass::printComponentValues() const {
     cout << "R: " << red << " G: " << green << " B: " << blue;
 }
 
-// ---------------- RowColumnClass Method Implementations ----------------
+// -------------RowColumnClass Method Implementations -------------
 
 /*
  * Default constructor initializes row and col values.
