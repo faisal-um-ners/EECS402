@@ -462,7 +462,7 @@ bool ColorClass::setTo(const ColorClass &inColor) {
                     inColor.green > COLOR_MAX_VALUE) ||
                    (inColor.blue < COLOR_MIN_VALUE || 
                     inColor.blue > COLOR_MAX_VALUE);
-    // Assign the values regardless of clipping (since they should already be valid)
+    // Assign the values if no clipping is needed
     if (!clipped) {
         red = inColor.red;
         green = inColor.green;
@@ -596,7 +596,11 @@ void RowColumnClass::printRowCol() const {
  Default constructor initializes image to black.
 */
 ColorImageClass::ColorImageClass() {
-    initializeTo(ColorClass(COLOR_MIN_VALUE, COLOR_MIN_VALUE, COLOR_MIN_VALUE));
+    initializeTo(ColorClass(COLOR_MIN_VALUE, 
+                            COLOR_MIN_VALUE, 
+                            COLOR_MIN_VALUE
+                            )
+                );
 }
 
 /*
