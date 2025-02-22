@@ -1,7 +1,7 @@
 // ============================================================
 // Project 2: Color and Image Classes
 // Programmer: Md Arifuzzaman Faisal
-// Date: 21 February 2025
+// Date: 22 February 2025
 // Purpose: Implement classes to represent colors,
 // images, and pixel locations.
 // ============================================================
@@ -15,7 +15,7 @@ const int COLOR_MIN_VALUE = 0;
 const int COLOR_MAX_VALUE = 1000;
 // Default sets for row and column to -99999
 const int DEFAULT_ROW_COLUMN_VALUE = -99999;
-// For ColorImageClass
+// For ColorImageClass (From Project2 specification)
 const int IMAGE_ROWS = 10;
 const int IMAGE_COLS = 18;
 // for loop start point
@@ -412,14 +412,18 @@ bool ColorClass::setTo(const ColorClass &inColor) {
   red   = inColor.red;
   green = inColor.green;
   blue  = inColor.blue;
+
+  bool wasClipped = false;
   // Check if the input color values are within the valid range
-  bool clipped =
-      (inColor.red < COLOR_MIN_VALUE || inColor.red > COLOR_MAX_VALUE) ||
-      (inColor.green < COLOR_MIN_VALUE || inColor.green > COLOR_MAX_VALUE) ||
-      (inColor.blue < COLOR_MIN_VALUE || inColor.blue > COLOR_MAX_VALUE);
-  // Perform the clipping
-  clipColorValues();
-  return clipped;
+  if (red < COLOR_MIN_VALUE || red > COLOR_MAX_VALUE ||
+      green < COLOR_MIN_VALUE || green > COLOR_MAX_VALUE ||
+      blue < COLOR_MIN_VALUE ||  blue > COLOR_MAX_VALUE)
+  {
+    clipColorValues(); 
+    // as clipping was necessary
+    wasClipped = true;
+  }
+  return wasClipped;
 }
 
 /*
