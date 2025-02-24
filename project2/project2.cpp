@@ -1,7 +1,7 @@
 // ============================================================
 // Project 2: Color and Image Classes
 // Programmer: Md Arifuzzaman Faisal
-// Date: 22 February 2025
+// Date: 24 February 2025
 // Purpose: Implement classes to represent colors,
 // images, and pixel locations.
 // ============================================================
@@ -114,7 +114,7 @@ class RowColumnClass {
 class ColorImageClass {
   private:
     // store two integer attributes for the number of rows and 
-    // columns, plus the pixel array
+    // columns for the pixel array / image size
     int numRows;
     int numCols;
     ColorClass image[IMAGE_ROWS][IMAGE_COLS];
@@ -415,6 +415,12 @@ bool ColorClass::setTo(const ColorClass &inColor) {
 
   bool wasClipped = false;
   // Check if the input color values are within the valid range
+  // and clip if necessary
+  // If any clipping was necessary returns true else false
+  // As arready copied the values, no need to clip again
+  // Therefore wasClipped below portion is commented out
+  // and not part of this project 2. 
+  /* 
   if (red < COLOR_MIN_VALUE || red > COLOR_MAX_VALUE ||
       green < COLOR_MIN_VALUE || green > COLOR_MAX_VALUE ||
       blue < COLOR_MIN_VALUE ||  blue > COLOR_MAX_VALUE)
@@ -423,6 +429,7 @@ bool ColorClass::setTo(const ColorClass &inColor) {
     // as clipping was necessary
     wasClipped = true;
   }
+  */
   return wasClipped;
 }
 
